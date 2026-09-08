@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="0e35b799-a0a1-4399-a05f-a98e0dca905a" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="weasttestFlow" doc:id="7ab639d3-31b9-4191-ba75-19b630b6bdf7" >
+		<http:listener doc:name="Listener" doc:id="c391c0fe-7c53-46b3-9010-1ec3b27ee0d3" config-ref="HTTP_Listener_config" path="/customers"/>
+		<ee:transform doc:name="Transform Message" doc:id="36566473-761b-4dd9-a33b-ae35bfc60424" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+	"people": [
+		{
+			"name": "John",
+			"id": 1
+		},
+		{
+			"name": "Jimmy",
+			"id": 2
+		},
+		{
+			"name": "Ryan",
+			"id": 3
+		}
+	]
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

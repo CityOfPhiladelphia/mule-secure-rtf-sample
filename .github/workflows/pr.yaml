@@ -1,0 +1,19 @@
+name: PR
+
+on:
+  pull_request:
+
+jobs:
+  comment:
+    name: PR Comment
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_pr_comment.yaml@main
+    secrets: inherit
+
+  pom:
+    name: Verify pom.xml
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_pom_xml.yaml@main
+
+  test:
+    name: Maven Test
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_test.yaml@main
+    secrets: inherit

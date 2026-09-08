@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <!-- BusinessGroupId or "e7a574d8-0ed8-493d-a738-bff628125611" for Root Org -->
+  <groupId>c8f6234f-e964-49cb-a15d-06af6d771461</groupId>
+  <!-- 
+    artifactId will be the name of the application in Runtime Manager,
+    and the name of the resource in Exchange
+  -->
+  <artifactId>weasttest</artifactId>
+  <!-- 
+    Use semantic versioning. You must increase this to a new value in
+    order to deploy new code
+  -->
+  <version>1.0.0</version>
+  <packaging>mule-application</packaging>
+  <!-- Human-readable name for the plugin -->
+  <name>Weast Test</name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <app.runtime>4.11.4</app.runtime>
+    <mule.maven.plugin.version>4.9.1</mule.maven.plugin.version>
+  </properties>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-clean-plugin</artifactId>
+        <version>3.5.0</version>
+      </plugin>
+      <plugin>
+        <groupId>org.mule.tools.maven</groupId>
+        <artifactId>mule-maven-plugin</artifactId>
+        <version>${mule.maven.plugin.version}</version>
+        <extensions>true</extensions>
+        <!-- 
+          Configuration for deploying to RTF, see
+          https://docs.mulesoft.com/mule-runtime/latest/deploy-to-rtf#rtf-deploy-reference
+          for documenation and additional parameters 
+        -->
+        <configuration>
+          <classifier>mule-application</classifier>
+          <runtimeFabricDeployment>
+            <uri>https://anypoint.mulesoft.com</uri>
+            <provider>MC</provider>
+            <!--
+              This automates deploying the RTF app to the same
+              business group that the resources in exchange
+              are deployed to.
+            -->
+            <businessGroupId>${project.groupId}</businessGroupId>
+            <!-- 20 minute timeout for deploy -->
+            <deploymentTimeout>1200000</deploymentTimeout>
+            <!-- Auth, leave this unchanged -->
+            <connectedAppGrantType>client_credentials</connectedAppGrantType>
+            <connectedAppClientId>${env.CONNECTED_APP_CLIENT_ID}</connectedAppClientId>
+            <connectedAppClientSecret>${env.CONNECTED_APP_CLIENT_SECRET}</connectedAppClientSecret>
+            <!-- Deployment versions -->
+            <muleVersion>${app.runtime}</muleVersion>
+            <javaVersion>17</javaVersion>
+            <!-- If using LTS release channel, make sure `app.runtime` is valid -->
+            <releaseChannel>edge</releaseChannel>
+            <!-- Sets app name to artifactId, leave this unchanged -->
+            <applicationName>${project.artifactId}</applicationName>
+            <!-- Env specification, leave unchanged -->
+            <target>${env.MS_TARGET}</target>
+            <environment>${env.MS_ENV}</environment>
+            <!-- Replicas should always be at least 2 for prod apps -->
+            <replicas>2</replicas>
+            <!--
+              These custom key-value pairs get set as the properties
+              under the RTF app
+            -->
+            <!--
+            <properties>
+              <test-custom-property>test-value</test-custom-property>
+              <custom-value>${env.CUSTOM_PROP}</custom-value>
+            </properties>
+            -->
+            <!-- 
+              secureProperties is how you deploy secrets to the mule app. Please refer
+              to documenation for the proper method to do so
+            -->
+            <!--
+            <secureProperties>
+              <test-secret-1>${env.TEST_SECRET_1}</test-secret-1>
+              <test-secret-2>${env.TEST_SECRET_2}</test-secret-2>
+            </secureProperties>
+            -->
+            <deploymentSettings>
+              <!--
+                There are many deployment settings that we leave
+                at default. Refer to
+                https://docs.mulesoft.com/mule-runtime/latest/deploy-to-rtf#deployment-settings
+              -->
+              <updateStrategy>rolling</updateStrategy>
+              <!--
+                Set CPU and Memory allocation. 100m=0.1 CPU, 1000Mi=1GB Memory
+              -->
+              <resources>
+                <cpu>
+                  <reserved>70m</reserved>
+                  <limit>70m</limit>
+                </cpu>
+                <memory>
+                  <reserved>700Mi</reserved>
+                </memory>
+              </resources>
+              <http>
+                <inbound>
+                  <!-- 
+                    This is the ingress endpoint. You likely shouldn't change it
+                    from this, which sets the endpoint to the RTF url for
+                    the environment, plus the project artifactId
+                  -->
+                  <publicUrl>${env.MS_RTF_URL}/${project.artifactId}</publicUrl>
+                </inbound>
+              </http>
+            </deploymentSettings>
+          </runtimeFabricDeployment>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+  <dependencies>
+    <dependency>
+      <groupId>org.mule.connectors</groupId>
+      <artifactId>mule-http-connector</artifactId>
+      <version>1.10.3</version>
+      <classifier>mule-plugin</classifier>
+    </dependency>
+    <dependency>
+      <groupId>org.mule.connectors</groupId>
+      <artifactId>mule-sockets-connector</artifactId>
+      <version>1.2.5</version>
+      <classifier>mule-plugin</classifier>
+    </dependency>
+  </dependencies>
+  <repositories>
+    <repository>
+      <id>anypoint-exchange-v3</id>
+      <name>Anypoint Exchange</name>
+      <url>https://maven.anypoint.mulesoft.com/api/v3/maven</url>
+      <layout>default</layout>
+    </repository>
+    <repository>
+      <id>mulesoft-releases</id>
+      <name>MuleSoft Releases Repository</name>
+      <url>https://repository.mulesoft.org/releases/</url>
+      <layout>default</layout>
+    </repository>
+    <!--
+      You must add this and do not change it
+    -->
+    <repository>
+      <id>Repository</id>
+      <name>Private Exchange repository</name>
+      <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+      <layout>default</layout>
+    </repository>
+  </repositories>
+  <pluginRepositories>
+    <pluginRepository>
+      <id>mulesoft-releases</id>
+      <name>MuleSoft Releases Repository</name>
+      <layout>default</layout>
+      <url>https://repository.mulesoft.org/releases/</url>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+  <!--
+    You must add this and do not change it
+  -->
+  <distributionManagement>
+    <repository>
+      <id>Repository</id>
+      <name>Corporate Repository</name>
+      <url>https://maven.anypoint.mulesoft.com/api/v3/organizations/${project.groupId}/maven</url>
+      <layout>default</layout>
+    </repository>
+  </distributionManagement>
+</project>

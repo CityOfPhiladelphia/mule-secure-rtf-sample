@@ -1,0 +1,71 @@
+name: Maven Deploy
+
+on:
+  # Allows manual triggering for Test and Dev
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: "Target Environment"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+
+  # Automatically triggers for Prod on push to main
+  push:
+    branches:
+      - main
+
+jobs:
+  verify-pom:
+    name: Verify pom.xml
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_pom_xml.yaml@main
+
+  maven-test:
+    name: Maven Test
+    needs: verify-pom
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_test.yaml@main
+    secrets: inherit
+
+  deploy-exchange:
+    name: Deploy to Exchange
+    needs: maven-test
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_exchange.yaml@main
+    secrets: inherit
+
+  deploy-dev:
+    name: Deploy to Dev
+    needs: deploy-exchange
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev') }}
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@main
+    secrets: inherit
+    with:
+      MS_ENV: SECURE-DEV
+      # See "Advanced Features" in Workflow docs
+      # extraEnv: '{"CUSTOM_PROP": "Water"}'
+      # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
+
+  deploy-test:
+    name: Deploy to Test
+    needs: deploy-dev
+    if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@main
+    secrets: inherit
+    with:
+      MS_ENV: SECURE-TEST
+      # See "Advanced Features" in Workflow docs
+      # extraEnv: '{"CUSTOM_PROP": "Fire"}'
+      # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
+
+  deploy-prod:
+    name: Deploy to Prod
+    needs: deploy-test
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@main
+    secrets: inherit
+    with:
+      MS_ENV: SECURE-PROD
+      # See "Advanced Features" in Workflow docs
+      # extraEnv: '{"CUSTOM_PROP": "Earth"}'
+      # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
