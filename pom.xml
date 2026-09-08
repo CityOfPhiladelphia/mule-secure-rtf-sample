@@ -89,6 +89,8 @@
             </secureProperties>
             -->
             <deploymentSettings>
+              <!-- Multiple replicas should be on different nodes to support HA -->
+              <enforceDeployingReplicasAcrossNodes>true</enforceDeployingReplicasAcrossNodes>
               <!--
                 There are many deployment settings that we leave
                 at default. Refer to
