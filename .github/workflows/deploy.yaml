@@ -27,12 +27,16 @@ jobs:
     needs: verify-pom
     uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_test.yaml@main
     secrets: inherit
+    with:
+      connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
 
   deploy-exchange:
     name: Deploy to Exchange
     needs: maven-test
     uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_exchange.yaml@main
     secrets: inherit
+    with:
+      connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
 
   deploy-dev:
     name: Deploy to Dev
@@ -42,6 +46,7 @@ jobs:
     secrets: inherit
     with:
       MS_ENV: SECURE-DEV
+      connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       # See "Advanced Features" in Workflow docs
       # extraEnv: '{"CUSTOM_PROP": "Water"}'
       # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
@@ -54,6 +59,7 @@ jobs:
     secrets: inherit
     with:
       MS_ENV: SECURE-TEST
+      connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       # See "Advanced Features" in Workflow docs
       # extraEnv: '{"CUSTOM_PROP": "Fire"}'
       # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
@@ -66,6 +72,7 @@ jobs:
     secrets: inherit
     with:
       MS_ENV: SECURE-PROD
+      connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       # See "Advanced Features" in Workflow docs
       # extraEnv: '{"CUSTOM_PROP": "Earth"}'
       # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
