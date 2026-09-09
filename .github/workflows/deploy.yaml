@@ -1,7 +1,7 @@
 name: Maven Deploy
 
 on:
-  # Allows manual triggering for Test and Dev
+  # Allows manual triggering for Dev
   workflow_dispatch:
     inputs:
       environment:
