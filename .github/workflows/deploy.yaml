@@ -58,7 +58,7 @@ jobs:
     name: Deploy to Test
     needs: deploy-dev
     if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') }}
-    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@main
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@add-mule-ee-secret
     secrets: inherit
     with:
       MS_ENV: SECURE-TEST
@@ -72,7 +72,7 @@ jobs:
     name: Deploy to Prod
     needs: deploy-test
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@main
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@add-mule-ee-secret
     secrets: inherit
     with:
       MS_ENV: SECURE-PROD
