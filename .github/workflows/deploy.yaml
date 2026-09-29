@@ -20,33 +20,36 @@ on:
 jobs:
   verify-pom:
     name: Verify pom.xml
-    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_pom_xml.yaml@main
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_pom_xml.yaml@add-mule-ee-secret
 
   maven-test:
     name: Maven Test
     needs: verify-pom
-    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_test.yaml@main
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_test.yaml@add-mule-ee-secret
     secrets: inherit
     with:
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
+      muleEEKeeperSecretId: "0QuKUfpty8Y8DvkebYqeuw"
 
   deploy-exchange:
     name: Deploy to Exchange
     needs: maven-test
-    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_exchange.yaml@main
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_exchange.yaml@add-mule-ee-secret
     secrets: inherit
     with:
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
+      muleEEKeeperSecretId: "0QuKUfpty8Y8DvkebYqeuw"
 
   deploy-dev:
     name: Deploy to Dev
     needs: deploy-exchange
     if: ${{ (github.event_name == 'push' && github.ref == 'refs/heads/main') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev') }}
-    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@main
+    uses: CityOfPhiladelphia/citygeo-shared-workflows/.github/workflows/mulesoft_deploy_rtf.yaml@add-mule-ee-secret
     secrets: inherit
     with:
       MS_ENV: SECURE-DEV
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
+      muleEEKeeperSecretId: "0QuKUfpty8Y8DvkebYqeuw"
       # See "Advanced Features" in Workflow docs
       # extraEnv: '{"CUSTOM_PROP": "Water"}'
       # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
@@ -60,6 +63,7 @@ jobs:
     with:
       MS_ENV: SECURE-TEST
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
+      muleEEKeeperSecretId: "0QuKUfpty8Y8DvkebYqeuw"
       # See "Advanced Features" in Workflow docs
       # extraEnv: '{"CUSTOM_PROP": "Fire"}'
       # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
@@ -73,6 +77,7 @@ jobs:
     with:
       MS_ENV: SECURE-PROD
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
+      muleEEKeeperSecretId: "0QuKUfpty8Y8DvkebYqeuw"
       # See "Advanced Features" in Workflow docs
       # extraEnv: '{"CUSTOM_PROP": "Earth"}'
       # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
