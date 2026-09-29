@@ -12,14 +12,14 @@
     Use semantic versioning. You must increase this to a new value in
     order to deploy new code
   -->
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <packaging>mule-application</packaging>
   <!-- Human-readable name for the plugin -->
   <name>Connect Test</name>
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-    <app.runtime>4.11.4</app.runtime>
+    <app.runtime>4.9.21</app.runtime>
     <mule.maven.plugin.version>4.9.1</mule.maven.plugin.version>
   </properties>
   <build>
@@ -60,7 +60,7 @@
             <muleVersion>${app.runtime}</muleVersion>
             <javaVersion>17</javaVersion>
             <!-- If using LTS release channel, make sure `app.runtime` is valid -->
-            <releaseChannel>edge</releaseChannel>
+            <releaseChannel>LTS</releaseChannel>
             <!-- Sets app name to artifactId, leave this unchanged -->
             <applicationName>${project.artifactId}</applicationName>
             <!-- Env specification, leave unchanged -->
