@@ -12,7 +12,7 @@
     Use semantic versioning. You must increase this to a new value in
     order to deploy new code
   -->
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <packaging>mule-application</packaging>
   <!-- Human-readable name for the plugin -->
   <name>Connect Test</name>
