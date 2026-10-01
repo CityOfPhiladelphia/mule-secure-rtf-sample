@@ -30,6 +30,11 @@ jobs:
     with:
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       muleEEKeeperSecretId: "SmoI_aGHVHNfdXFZkSShIA"
+      # See "Advanced Features" in Workflow docs
+      extraEnv: '{"CUSTOM_PROP": "https://maven-test.com"}'
+      additionalKeeperSecrets: |-
+        JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+      secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-exchange:
     name: Deploy to Exchange
@@ -39,6 +44,11 @@ jobs:
     with:
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       muleEEKeeperSecretId: "SmoI_aGHVHNfdXFZkSShIA"
+      # See "Advanced Features" in Workflow docs
+      extraEnv: '{"CUSTOM_PROP": "https://exchange.com"}'
+      additionalKeeperSecrets: |-
+        JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+      secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-dev:
     name: Deploy to Dev
