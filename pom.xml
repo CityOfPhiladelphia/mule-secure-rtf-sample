@@ -69,17 +69,14 @@
             <!-- Replicas should always be at least 2 for prod apps -->
             <replicas>2</replicas>
             <!--
-              These custom key-value pairs get set as the properties
+              OPTIONAL. These custom key-value pairs get set as the properties
               under the RTF app
             -->
-            <!--
             <properties>
-              <test-custom-property>test-value</test-custom-property>
               <custom-value>${env.CUSTOM_PROP}</custom-value>
             </properties>
-            -->
             <!-- 
-              secureProperties is how you deploy secrets to the mule app. Please refer
+              OPTIONAL. secureProperties is how you deploy secrets to the mule app. Please refer
               to documenation for the proper method to do so
             -->
             <secureProperties>
