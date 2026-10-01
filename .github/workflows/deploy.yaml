@@ -34,7 +34,7 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://maven-test.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
-      secretsToEnv: "TEST_KEEPER_RECORD"
+      # secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-exchange:
     name: Deploy to Exchange
@@ -59,7 +59,7 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://dev.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
-      secretsToEnv: "TEST_KEEPER_RECORD"
+      # secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-test:
     name: Deploy to Test
@@ -75,7 +75,7 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://test.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
-      secretsToEnv: "TEST_KEEPER_RECORD"
+      # secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-prod:
     name: Deploy to Prod
@@ -91,4 +91,4 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://prod.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
-      secretsToEnv: "TEST_KEEPER_RECORD"
+      # secretsToEnv: "TEST_KEEPER_RECORD"
