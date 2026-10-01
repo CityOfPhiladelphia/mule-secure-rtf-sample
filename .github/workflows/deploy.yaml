@@ -51,8 +51,10 @@ jobs:
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       muleEEKeeperSecretId: "SmoI_aGHVHNfdXFZkSShIA"
       # See "Advanced Features" in Workflow docs
-      # extraEnv: '{"CUSTOM_PROP": "Water"}'
-      # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
+      extraEnv: '{"CUSTOM_PROP": "https://dev.com"}'
+      additionalKeeperSecrets: |-
+        JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+      secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-test:
     name: Deploy to Test
@@ -65,8 +67,10 @@ jobs:
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       muleEEKeeperSecretId: "SmoI_aGHVHNfdXFZkSShIA"
       # See "Advanced Features" in Workflow docs
-      # extraEnv: '{"CUSTOM_PROP": "Fire"}'
-      # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
+      extraEnv: '{"CUSTOM_PROP": "https://test.com"}'
+      additionalKeeperSecrets: |-
+        JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+      secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-prod:
     name: Deploy to Prod
@@ -79,5 +83,7 @@ jobs:
       connectedAppKeeperSecretId: "ZJvc-MEGu_1tudqqfR2OAA"
       muleEEKeeperSecretId: "SmoI_aGHVHNfdXFZkSShIA"
       # See "Advanced Features" in Workflow docs
-      # extraEnv: '{"CUSTOM_PROP": "Earth"}'
-      # secretsToEnv: "TEST_SECRET_1, TEST_SECRET_2"
+      extraEnv: '{"CUSTOM_PROP": "https://prod.com"}'
+      additionalKeeperSecrets: |-
+        JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+      secretsToEnv: "TEST_KEEPER_RECORD"

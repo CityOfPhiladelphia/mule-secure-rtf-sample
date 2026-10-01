@@ -82,12 +82,9 @@
               secureProperties is how you deploy secrets to the mule app. Please refer
               to documenation for the proper method to do so
             -->
-            <!--
             <secureProperties>
-              <test-secret-1>${env.TEST_SECRET_1}</test-secret-1>
-              <test-secret-2>${env.TEST_SECRET_2}</test-secret-2>
+              <test-secret-1>${env.TEST_KEEPER_RECORD}</test-secret-1>
             </secureProperties>
-            -->
             <deploymentSettings>
               <!-- Multiple replicas should be on different nodes to support HA -->
               <enforceDeployingReplicasAcrossNodes>true</enforceDeployingReplicasAcrossNodes>
