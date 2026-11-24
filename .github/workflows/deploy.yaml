@@ -34,6 +34,7 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://maven-test.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+        GIF7Mt7sFmTgWIl4eXPDvQ/field/keyPair[privateKey] > env:TEST_SSH_PRIVATE_KEY
       # secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-exchange:
