@@ -11,7 +11,7 @@
 output application/json
 ---
 {
-  "message": "Hello Mule"
+  "message": "Hello Mule 2"
 }]]></ee:set-payload>
       </ee:message>
     </ee:transform>
