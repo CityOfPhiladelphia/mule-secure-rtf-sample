@@ -59,6 +59,7 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://dev.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+        GIF7Mt7sFmTgWIl4eXPDvQ/field/keyPair[privateKey] > env:TEST_SSH_PRIVATE_KEY
       # secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-test:
@@ -75,6 +76,7 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://test.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+        GIF7Mt7sFmTgWIl4eXPDvQ/field/keyPair[privateKey] > env:TEST_SSH_PRIVATE_KEY
       # secretsToEnv: "TEST_KEEPER_RECORD"
 
   deploy-prod:
@@ -91,4 +93,5 @@ jobs:
       extraEnv: '{"CUSTOM_PROP": "https://prod.com"}'
       additionalKeeperSecrets: |-
         JHJhsnamfyCjH52crutNVQ/field/login > env:TEST_KEEPER_RECORD
+        GIF7Mt7sFmTgWIl4eXPDvQ/field/keyPair[privateKey] > env:TEST_SSH_PRIVATE_KEY
       # secretsToEnv: "TEST_KEEPER_RECORD"

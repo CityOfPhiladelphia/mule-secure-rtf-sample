@@ -81,6 +81,7 @@
             -->
             <secureProperties>
               <test-secret-1>${env.TEST_KEEPER_RECORD}</test-secret-1>
+              <SSH_PRIVATE_KEY>${env.TEST_SSH_PRIVATE_KEY}</SSH_PRIVATE_KEY>
             </secureProperties>
             <deploymentSettings>
               <!-- Multiple replicas should be on different nodes to support HA -->
